@@ -1,9 +1,8 @@
-package com.sipox11.retrofitgsonmoviesapiclientdemo.ui;
+package com.sipox11.retrofitgsonmoviesapiclientdemo.ui.movies;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.sipox11.retrofitgsonmoviesapiclientdemo.BuildConfig;
 import com.sipox11.retrofitgsonmoviesapiclientdemo.R;
@@ -18,9 +17,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class MoviesActivity extends AppCompatActivity {
 
-    private static final String TAG = MainActivity.class.getSimpleName();
+    private static final String TAG = MoviesActivity.class.getSimpleName();
 
     // Read README.md to learn where the API KEY comes from
     private final static String API_KEY = BuildConfig.ApiKey;
@@ -28,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_movies);
         // Make sure the API KEY is set
         if (API_KEY.isEmpty()) {
             Log.e(TAG, "onCreate: API KEY not found. " +
