@@ -2,6 +2,8 @@ package com.sipox11.retrofitgsonmoviesapiclientdemo.ui.movies;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import com.sipox11.retrofitgsonmoviesapiclientdemo.BuildConfig;
@@ -13,6 +15,8 @@ import com.sipox11.retrofitgsonmoviesapiclientdemo.data.translation.response_mod
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -23,6 +27,10 @@ public class MoviesActivity extends AppCompatActivity {
 
     // Read README.md to learn where the API KEY comes from
     private final static String API_KEY = BuildConfig.ApiKey;
+
+    // Use butter knife to bind recycler view
+    @BindView(R.id.recycler_view)
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +43,28 @@ public class MoviesActivity extends AppCompatActivity {
             return;
         }
 
+        // Setup UI
+        setupUI();
+
+        // Start network request
+        requestMovies();
+    }
+
+
+    /**
+     * Sets the UI up. Binds butter knife for view injejction and configures the RecyclerView.
+     */
+    private void setupUI() {
+        // Bind views with butter knife
+        ButterKnife.bind(this);
+        // Setup RecyclerView
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    /**
+     * Performs network request for top rated movies.
+     */
+    private void requestMovies() {
         // Generate Movies API instance with Retrofit Api Client
         MoviesApi moviesApi =
                 ApiClient.getClient().create(MoviesApi.class);
@@ -48,6 +78,7 @@ public class MoviesActivity extends AppCompatActivity {
             public void onResponse(Call<MoviesResponse> call, Response<MoviesResponse> response) {
                 List<Movie> movies = response.body().getResults();
                 Log.d(TAG, "Number of movies received: " + movies.size());
+                recyclerView.setAdapter(new MoviesAdapter(movies, R.layout.list_item_movie, getApplicationContext()));
             }
 
             @Override
@@ -57,4 +88,5 @@ public class MoviesActivity extends AppCompatActivity {
             }
         });
     }
+
 }
