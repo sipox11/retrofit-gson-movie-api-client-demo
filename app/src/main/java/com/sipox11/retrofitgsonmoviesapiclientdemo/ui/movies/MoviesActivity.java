@@ -30,7 +30,7 @@ public class MoviesActivity extends AppCompatActivity {
 
     // Use butter knife to bind recycler view
     @BindView(R.id.recycler_view)
-    private RecyclerView recyclerView;
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
